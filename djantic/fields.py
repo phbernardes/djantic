@@ -95,6 +95,8 @@ def ModelSchemaField(field: Any, schema_name: str) -> tuple:
                 if Promise in type(v).__mro__:
                     v = str(v)
                 enum_choices[v] = k
+            if field.blank:
+                enum_choices['_blank'] = ''
 
             enum_prefix = (
                 f"{schema_name.replace('_', '')}{field.name.title().replace('_', '')}"
