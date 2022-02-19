@@ -1,12 +1,11 @@
 import logging
-from typing import Any, Dict, List, Union
+from datetime import date, datetime, time, timedelta
 from decimal import Decimal
-from datetime import date, time, datetime, timedelta
 from enum import Enum
+from typing import Any, Dict, Union
 from uuid import UUID
 
 from django.utils.functional import Promise
-
 from pydantic import IPvAnyAddress, Json
 from pydantic.fields import FieldInfo, Required, Undefined
 
@@ -46,7 +45,7 @@ FIELD_TYPES = {
     "FloatField": float,
     "UUIDField": UUID,
     "JSONField": Union[Json, dict, list],  # TODO: Configure this using default
-    "ArrayField": List,
+    "ArrayField": list,
     # "BigIntegerRangeField",
     # "CICharField",
     # "CIEmailField",
@@ -82,7 +81,7 @@ def ModelSchemaField(field: Any, schema_name: str) -> tuple:
 
         pk_type = FIELD_TYPES.get(internal_type, int)
         if field.one_to_many or field.many_to_many:
-            python_type = List[Dict[str, pk_type]]
+            python_type = list[Dict[str, pk_type]]
         else:
             python_type = pk_type
 
